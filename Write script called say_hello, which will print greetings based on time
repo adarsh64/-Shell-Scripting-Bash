@@ -1,0 +1,43 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 16-09-2023
+Description: Write script called say_hello, which will print greetings based on time
+Sample Input:
+Sample Output: 
+When we start shell (whenever you opening new tab or terminal)
+Good Morning user, Have nice day!
+This is Thursday 08 in June of 2017 (10:44:10 AM)
+doc
+
+user=`whoami`       # Get the current username and store it in the 'user' variable
+day=`date | cut -d " " -f1`                     # Extract the day of the week and store it in the 'day' variable
+date=`date | tr -s " " | cut -d " " -f2`        # Extract the date and store it in the 'date' variable
+month=`date | tr -s " " | cut -d " " -f3`       # Extract the month and store it in the 'month' variable
+year=`date | tr -s " " | cut -d " " -f4`        # Extract the year and store it in the 'year' variable
+p_time=`date | tr -s " " | cut -d " " -f5`      # Extract the full time and store it in the 'p_time' variable
+f=`date | tr -s " " | cut -d " " -f6`           # Extract the AM/PM indicator and store it in the 'f' variable
+time=`date +%H | tr -s " " | cut -d " " -f5 | cut -d : -f1`     # Extract the current hour and store it in the 'time' variable
+
+if [ $time -gt 5 -a $time -lt 12 ]      # Check the time of day and print a greeting message accordingly
+then
+        echo "Good Morning $user,Have a nice day!"
+        echo "This is $day $date in $month of $year ($p_time $f)"
+elif [ $time -gt 12 -a $time -lt 13 ]
+then
+        echo "Good noon $user,Have a nice day!"
+        echo "This is $day $date in $month of $year ($p_time $f)"
+elif [ $time -gt 14 -a $time -lt 17 ]
+then
+        echo "Good afternoon $user,Have a nice day!"
+        echo "This is $day $date in $month of $year ($p_time $f)"
+elif [ $time -gt 17 -a $time -lt 21 ]
+then
+        echo "Good evening $user,Have a nice day!"
+        echo "This is $day $date in $month of $year ($p_time $f)"
+elif [ $time -gt 21 -a $time -lt 5 ]
+then
+        echo "Good night $user,Have a nice day!"
+        echo "This is $day $date in $month of $year ($p_time $f)"
+fi
+
