@@ -1,2 +1,3 @@
 # -Shell-Scripting-Bash
-About Solutions to selected problems implemented on Bash.
+
+*************    Solutions for some basic to complex Problems    *****************
