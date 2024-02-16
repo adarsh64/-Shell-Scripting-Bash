@@ -1,0 +1,26 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 14-09-2023
+Description: Write a script to print the length of each and every string using arrays
+Sample Input:hello hai how are you?
+Sample Output:
+Length of string (hello) - 5
+Length of string (hai) - 3
+Length of string (how) - 3
+Length of string (are) - 3
+Length of string (you?) - 4
+doc
+
+arr=($@)            # Store command-line arguments in an array called 'arr'
+
+val=$((${#arr[@]} - 1))     # Calculate the index of the last element in the 'arr' array
+if [ $# -eq 0 ]             # Check if there are no command-line arguments
+then
+        echo "Error : Please pass the arguments through command-line."
+else
+        for i in `seq 0 $val`       # Loop through the array elements using 'seq' from 0 to the last element
+        do
+                echo "Length of string (${arr[$i]}) - ${#arr[i]}"   # Print the length of each string in the array
+        done
+fi
