@@ -1,0 +1,51 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 23-09-2023
+Description: Write a script to replace 20% lines in a C file randomly and replace it with the pattern 
+Sample Input: ./replace_DEL.sh main.c
+Sample Output:
+Before replacing
+#incude <stdio.h>
+int main()
+{
+         printf(“Hello world\n”);
+}
+After replacing
+#incude <stdio.h>
+int main()
+{
+<-----------Deleted------------>
+}
+
+doc
+
+if [ $# -eq 0 ]     # Check if no command-line arguments are provided
+then
+        echo "Error : Please pass the file name through command line."
+elif [ $# -eq 1 ]       # Check if exactly one command-line argument is provided
+then
+        if [ ! -f $1 ]       # Check if the provided file does not exist
+        then
+                echo "Error : No such a file."
+        elif [ ! -s $1 ]       # Check if the provided file is empty
+        then
+                echo "Error : $1 is empty file. So can’t replace the string."
+        else
+                echo "Before replacing"  # Print the content of the file before replacing
+                cat "$1"
+                l=`cat $1 | wc -l`          # Count the number of lines in the file
+                if [ $l -ge 5 ]             # Check if the number of lines is greater than or equal to 5 (to calculate 20%)
+                then
+                        p=$((l / 5))        # Calculate the number of random lines to replace
+                        var=`shuf -i 1-"$l" -n "$p"`         # Generate random line numbers
+                        for i in $var                        # Loop through the random line numbers
+                        do
+                                # Replace the content of the selected lines with "<-----------Deleted------------>"
+                                sed -i "${i} s/.*$/<-----------Deleted------------>/" $1
+                        done
+                fi
+        fi
+fi
+echo "After replacing"      # Print the content of the file after replacing
+cat "$1"
