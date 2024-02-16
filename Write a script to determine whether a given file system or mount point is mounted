@@ -1,0 +1,43 @@
+#!/bin/bash
+<<doc
+Name: Adarsh rai
+date: 23-09-2023
+Description: Write a script to determine whether a given file system or mount point is mounted
+Sample Input: ./mounted_fs.sh /dev/sda2
+Sample Output: 
+File-system /dev/sda2 is mounted on / and it is having 98%
+used space with 3298220 KB free.
+
+doc
+
+a=(`df | tr -s " " | cut -d " " -f1`)       # Store the file system names in array 'a'
+b=(`df | tr -s " " | cut -d " " -f6`)       # Store the mount points in array 'b'
+c=(`df | tr -s " " | cut -d " " -f5`)       # Store the used space percentages in array 'c'
+d=(`df -h --total | tr -s " " | cut -d " " -f2`)        # Store the total available space in array 'd'
+
+# Copy the arrays to new arrays for easy reference
+arr1=("${a[@]}")
+arr2=("${b[@]}")
+arr3=("${c[@]}")
+arr4=("${d[@]}")
+
+y=${#arr1[@]}       # Get the length of the array 'a'
+
+if [ $# -eq 0 ]     # Check if no command line arguments were provided
+then
+                echo "Error : Please pass the name of the file-system through command line."
+else
+                i=0
+                while [ $i -lt $y ]     # Loop through file system names
+                do
+                        if [ ${arr1[$i]} == $1 ]        # Check if the provided file system name matches any in the array
+                        then
+                                    # Print information about the matched file system
+                                    echo "File-system ${arr1[$i]} is mounted on ${arr2[$i]} and it is having ${arr3[$i]}. used space with ${arr4[$i]} free"
+                                    exit 0 
+                        fi
+                        i=$((i + 1))
+                done
+                echo "$1 is not mounted."       # If no match was found, print a message
+fi
+    
