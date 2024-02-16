@@ -1,0 +1,34 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 18-09-2023
+Description: WAS to print contents of a directory without ls command
+Sample Input:./ouput_ls.sh ~ ~/ECEP
+Sample Output:
+/home/user:
+Downloads Documents Desktop Music Pictures Public Videos
+ECEP
+/home/user/ECEP:
+Linux_Systems Advnc_C Linux_Internals Data_Structures MC
+
+doc
+
+if [ $# -eq 0 ]             # Check if there are no arguments provided
+then
+        echo *              # If no arguments, list files and directories in the current directory
+elif [ $# -gt 0 ]           # Check if there are one or more arguments  
+then
+        for i in $@         # Loop through each argument
+        do
+                if [ -d $i ]        # Check if the argument is a directory
+                then
+                        cd $i       # Change to the directory
+                        pwd         # Print the current directory path
+                        echo *      # List files and directories in the current directory
+                        cd ..       # Change back to the previous directory
+                else
+                        # If the argument is not a directory, print an error message
+                        echo " Cannot access '$i':No such a file or directory."
+                fi
+        done
+fi
