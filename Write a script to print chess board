@@ -1,0 +1,23 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 10-09-2023
+Description: Write a script to print chess board
+doc
+
+for rows in `seq 8`         # Loop through 8 rows
+do
+	for cols in `seq 8`      # Loop through 8 columns
+	do
+		let a=`expr $rows + $cols`      # Calculate the sum of row and column indices
+		if [ $(($a % 2)) -eq 0 ]        # Check if the sum is even
+		then	
+			echo -e -n "\e[47m" " "     # If even, set background color to white (47)
+		else    
+			echo -e -n "\e[40m" " "     # If odd, set background color to black (40)
+		fi
+	done
+	echo -e -n "\e[0m" " "             # Reset color to default (0) and move to the next line
+	echo
+done
+
