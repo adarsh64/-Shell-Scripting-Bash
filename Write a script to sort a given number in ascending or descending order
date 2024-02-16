@@ -1,0 +1,76 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 23-09-2023
+Description: Write a script to sort a given number in ascending or descending order
+Sample Input: ./sorting.sh -a 5 4 6 2 3 8 9 7 1
+Sample Output:
+Ascending order of array is 1 2 3 4 5 6 7 8 9
+doc
+
+#!/bin/bash
+
+# Check if there are command line arguments
+if [ $# -gt 0 ]
+then
+    # Store command line arguments in an array
+    array=($@)
+
+    # Check the first argument using a case statement
+    case ${array[0]} in
+
+        -a)
+            # Sort in ascending order using bubble sort algorithm
+            length=${#array[@]}
+            for i in `seq 1 $(($length - 1))`
+            do
+                for j in `seq 1 $(($length - 2))`
+                do
+                    # Compare and swap elements if necessary
+                    if [ ${array[$j]} -gt "${array[$(($j+1))]}" ]
+                    then
+                        temp=${array[$j]}
+                        array[$j]=${array[$(($j+1))]}
+                        array[$(($j+1))]=$temp
+                    fi
+                done
+            done
+            length=${#array[@]}
+
+            # Print the ascending order of the array (excluding the first element)
+            echo "ascending order of array is ${array[@]:1:$(($length - 1))}"
+            ;;
+
+        -d)
+            # Sort in descending order using bubble sort algorithm
+            length=${#array[@]}
+            for i in `seq 1 $(($length - 1))`
+            do
+                for j in `seq 1 $(($length - 2))`
+                do
+                    # Compare and swap elements if necessary
+                    if [ ${array[$j]} -lt "${array[$(($j+1))]}" ]
+                    then
+                        temp=${array[$j]}
+                        array[$j]=${array[$(($j+1))]}
+                        array[$(($j+1))]=$temp
+                    fi
+                done
+            done
+            length=${#array[@]}
+
+            # Print the descending order of the array (excluding the first element)
+            echo "descending order of array is ${array[@]:1:$(($length - 1))}"
+            ;;
+
+        *)
+            # Display an error message for invalid input
+            echo "ERROR : Please pass the choice.
+Usage : ./sorting -a/-d 4 23 5 6 3"
+            ;;
+    esac
+else
+    # Display an error message for missing command line arguments
+    echo "Error : Please pass the argument through command line.
+Usage : ./sorting -a/-d 4 23 5 6 3"
+fi
