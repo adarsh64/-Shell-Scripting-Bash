@@ -1,0 +1,108 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 18-09-2023
+Description: Write a script to print system information using commands
+Sample Input: ./system_info.sh
+Sample Output:
+
+1. Currently logged users
+2. Your shell directory
+3. Home directory
+4. OS name & version
+5. Current working directory
+6. Number of users logged in
+7. Show all available shells in your system
+8. Hard disk information
+9. CPU information.
+10. Memory Informations
+11. File system information.
+12. Currently running process.
+Enter the choice : 2
+Your shell directory is /bin/bash
+Do you want to continue (y/n) ? y
+1. Currently logged users
+2. Your shell directory
+3. Home directory
+4. OS name & version
+5. Current working directory
+6. Number of users logged in
+7. Show all available shells in your system
+8. Hard disk information
+9. CPU information.
+10. Memory Informations
+11. File system information.
+12. Currently running process.
+Enter the choice : 13
+Error : Invalid option, please enter valid
+doc
+
+while true      # Start an infinite loop to allow the user to choose options multiple times.
+do
+# Display the menu of options.
+echo "          
+1. Currently logged users
+2. Your shell directory
+3. Home directory
+4. OS name & version
+5. Current working directory
+6. Number of users logged in
+7. Show all available shells in your system
+8. Hard disk information
+9. CPU information.
+10. Memory Informations
+11. File system information.
+12. Currently running process."
+
+read -p "Enter the choice :" num     # Prompt the user to enter their choice.
+
+case $num in                         # Use a case statement to execute the chosen option.
+        1)
+                echo "Your shell directory is `whoami`"     # Display currently logged user
+                ;;
+        2)
+                echo "Your shell directory is `$SHELL`"      # Display the user's shell directory.
+                ;;
+        3)
+                echo "Your shell directory is `echo ~`"     # Display the user's home directory.
+                ;;
+        4)
+                echo "Your shell directory is `uname -sv`"  # Display the OS name and version.
+                ;;
+        5)
+                pwd
+                echo "Your shell directory is `pwd`"        # Display the current working directory
+                ;;
+        6)
+                echo "Your shell directory is `who -q`"     # Display the number of users logged in 
+                ;;
+        7)
+                echo "Your shell directory is `cat /etc/shells`"    # Show all available shells in the system
+                ;;
+        8)
+                echo "Your shell directory is `lsblk`"      # Display hard disk information
+                ;;
+        9)
+                echo "Your shell directory is `cat /proc/cpuinfo`"  # Display CPU information 
+                ;;
+        10)
+                echo "Your shell directory is `cat /proc/meminfo`"   # Display memory information 
+                ;;
+        11)
+                echo "Your shell directory is `df`"          # Display file system information 
+                ;;
+        12)
+                echo "Your shell directory is `ps`"          # Display currently running processes
+                ;;
+        *)
+                echo "Error : Invalid option, please enter valid option"    # Handle invalid input.
+                ;;
+esac
+echo -n "Do you want to continue (y/n)? "       # Prompt the user if they want to continue.
+read val
+
+if [ "$val" != "y" -a "$val" != "Y" ]        # If the user enters anything other than 'y' or 'Y', exit the loop.
+then
+        break
+fi
+done
