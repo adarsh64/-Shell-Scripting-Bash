@@ -1,0 +1,55 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 16-09-2023
+Description: Write a script to perform arithmetic operation on digits of a given number
+Sample Input: ./operator_dependent.sh 1234+
+Sample Output: Sum of digits = 10
+doc
+
+n=$1                    # Get the input argument from the command line.
+
+operator=${n: -1}       # Extract the operator from the last character of the input.
+
+res=${n:0:1}            # Initialize the result with the first digit of the input.
+
+val=`expr ${#n} - 2`    # Calculate the length of the input number.
+if [ $# -eq 0 ]         # Check if an argument is provided.
+then
+        echo "Error : Please pass the arguments through CL."
+        echo "Usage : ./operator_dependent.sh 2345+"
+else
+                case $operator in       # Perform different operations based on the operator.
+                        +)
+                                for i in `seq $val`
+                                do
+                                        res=`echo "$((res + ${n:$i:1}))" | bc`
+                                done
+                                        echo "Sum of digits = $res"
+                                ;;
+                        -)
+                                for i in `seq $val`
+                                do
+                                        res=`echo "$((res - ${n:$i:1}))" | bc`
+                                done
+                                        echo "Subtraction of digits = $res"
+                                ;;
+                        x)
+                                for i in `seq $val`
+                                do
+                                        res=`echo "$((res * ${n:$i:1}))" | bc`
+                                done
+                                        echo "Multiplication of digits = $res"
+                                ;;
+                        /)
+                                for i in `seq $val`
+                                do
+                                        res=`echo "scale=2;$res/${n:$i:1}" | bc`
+                                done
+                                        echo "Division of digits = $res"
+                                ;;
+                        *)
+                                echo "Error: Operator missing or invalid operator, please pass operator as last digit (+,-,x,/)"
+                                ;;
+                esac
+fi
