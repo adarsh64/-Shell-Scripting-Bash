@@ -1,0 +1,24 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 16-09-2023
+Description: Given album name and corresponding directory, this scripts renames the jpg files with new name passed through command line
+Sample Input:./rename_album.sh day_out
+Sample Output:
+All .jpg files in current directory is renamed as
+day_out001.jpg day_out002.jpg day_out003.jpg day_out005.jpg day_out004.jpg
+doc
+
+if [ $# -eq 0 ]     # Check if no command-line arguments are provided
+then
+        echo "Error : Please pass the prefix name through command line."    
+elif [ $# -eq 1 ]       # Check if exactly one command-line argument is provided
+then
+        echo "All .jpg files in current directory is renamed as"    
+        for i in `ls *.jpg`     # Loop through all .jpg files in the current directory
+        do
+                dig=`echo $i | tr -cd [:digit:]`         # Extract digits from the filename using 'tr'
+                mv $i $1$dig.jpg                        # Rename the file by adding the provided prefix and digits
+        done
+        ls           # List the files in the current directory to show the changes
+fi
