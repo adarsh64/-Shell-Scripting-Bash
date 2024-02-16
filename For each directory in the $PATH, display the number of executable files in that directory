@@ -1,0 +1,54 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 19-09-2023
+Description: For each directory in the $PATH, display the number of executable files in that directory
+Sample Input:./executable_path.sh
+Sample Output:
+
+Current dir: /usr/local/sbin
+current count: 0
+Current dir: /usr/local/bin
+current count: 0
+Current dir: /usr/sbin
+current count: 205
+Current dir: /usr/bin
+current count: 1889
+Current dir: /sbin
+current count: 187
+Current dir: /bin
+current count: 159
+Current dir: /usr/games
+current count: 5
+Current dir: /usr/local/games
+current count: 0
+Total – 2445
+doc
+
+arr=(`echo $PATH | tr -s ":" " "`)  # Split the PATH variable into an array using ':' as the delimiter and store it in 'arr'
+
+total=0         # Initialize a variable 'total' to keep track of the total count of executable files
+
+for i in ${arr[@]}          # Loop through each directory in the 'arr' array
+do
+        if [ -d $i ]        # Check if the element is a directory
+        then
+                cd $i           # Change the current working directory to the directory being processed
+                arr2=(ls)       # List all files and directories in the current directory and store them in 'arr2'
+                count=0         # Initialize a variable 'count' to keep track of the number of executable files
+                for j in $i     # Loop through each item in 'i' 
+                do
+                        if [ -x $j ]        # Check if the item is an executable file
+                        then
+                                count=$(($count+1))     # Increment the 'count' variable if it's executable
+                        fi
+                done
+                # Print the current directory path and the count of executable files in that directory
+                echo "Current dir: $i"
+                echo "Current count: $count"
+                
+                # Update the 'total' count with the count of executable files in this directory
+                total="`expr $total + $count`"
+        fi
+done
+echo "Total - $total"   # Print the total count of executable files across all directories
