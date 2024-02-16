@@ -1,0 +1,23 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 10-09-2023
+Description: Read 'n' and generate a pattern given below( number increments from left to right)
+Sample Input: Enter the number : 4
+Sample Output: 
+1
+1 2
+1 2 3    
+1 2 3 4
+doc
+
+read -p "Enter the number: " n #read the input from user and stores in variable n
+
+for rows in `seq $n`  #start a for loop and that iterates for the sequence from 1 to n
+do
+        for cols in `seq $rows`  #here, we start another loop inside first one.
+        do
+                echo -n "$cols "  #here we print the value of variable without a new line
+        done
+        echo  #here it prints a new line after every iteration of  outer loop
+done
