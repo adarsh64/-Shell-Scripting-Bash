@@ -1,0 +1,23 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 14-09-2023
+Description: Write a script to delete empty lines from a file
+Sample Input: delete_empty_lines.sh file.txt
+Sample Output:  
+Empty lines are deleted
+Hello
+How
+are
+you?
+doc
+
+a=$1                # Store the first command line argument in variable 'a'
+if [ $# -eq 1 ]     # Check if exactly one argument is provided
+then
+        `sed -i /^[[:blank:]]*$/d $a`       # Use 'sed' to delete empty lines from the file in-place and save the changes
+        echo "Empty lines are deleted"      # Print a message indicating that empty lines have been deleted
+        cat $a                              # Display the content of the modified file
+else
+        echo "Error: Please pass the file name through command line."    # If the number of arguments is not equal to 1, display an error message
+fi
