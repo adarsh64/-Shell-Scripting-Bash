@@ -1,0 +1,45 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 23-09-2023
+Description: Count the number of users with user IDs between given range.
+Sample Input: ./user_ids.sh
+Sample Output:  
+Total count of user ID between 500 to 10000 is: 2
+
+doc
+
+# Define default range
+start_range=500
+end_range=10000
+
+if [ $# -eq 2 ]          # Check if command-line arguments are provided
+then
+    start_range=$1
+    end_range=$2
+elif [ $# -eq 1 ] 
+then
+    echo "Error: Please pass 2 arguments through command line."
+    echo "Usage: $0 <start_range> <end_range>"
+    exit 1
+fi
+
+# Check if the provided range is valid
+if [ "$start_range" -gt "$end_range" ]; then
+    echo "Error: Invalid range. Please enter the valid range through CL."
+    exit 
+fi
+
+uids=(`cat /etc/passwd | cut -d ":" -f3`)   # Use 'cut' command to extract UIDs from /etc/passwd and store them in an array
+
+count=0                  # Initialize a counter for users within the specified range
+
+for uid in "${uids[@]}"     # Loop through the array of UIDs and count users within the range
+do
+    if [ "$uid" -ge "$start_range" ] && [ "$uid" -le "$end_range" ]
+    then
+        count=$((count + 1))
+    fi
+done
+
+echo "Total count of user ID between $start_range to $end_range is: $count" # Print the count of users within the range
