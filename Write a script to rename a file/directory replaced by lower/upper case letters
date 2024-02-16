@@ -1,0 +1,23 @@
+#!/bin/bash
+<<doc
+Name: Adarsh Rai
+date: 16-09-2023
+Description: Write a script to rename a file/directory replaced by lower/upper case letters
+Sample Input:./file_upper_lower.sh
+Sample Output:Files are rename in lowercase and directories are renamed in upper case
+doc
+
+for i in `ls`       # Loop through all files and directories in the current directory
+do
+        if [ -f $i ]    # Check if it is a regular file
+        then
+                new=`echo $i | tr [a-z] [A-Z]`  # Convert the filename to uppercase
+                mv $i $new                      # Rename the file to the new uppercase name
+        elif [ -d $i ]      # Check if it is a directory
+        then
+                new2=`echo $i | tr [A-Z] [a-z]`      # Convert the directory name to lowercase
+                mv $i $new2                          # Rename the directory to the new lowercase name
+        fi
+done
+# Print a message indicating the renaming is complete
+echo "Files are renamed in lowercase and directories are renamed in upper case"
